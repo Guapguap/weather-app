@@ -22,8 +22,14 @@ displayWeather: function(data){
     document.querySelector('.temp').innerText = temp + "°F";
     document.querySelector('.humid').innerText = "Humidity: " + humidity + "%";
     document.querySelector('.wind').innerText = "Wind Speed: " + speed + "mph";
+},
+
+search: function (){
+    this.fetchWeather(document.querySelector('.search-bar').value);
 }
 };
 
 
-document.querySelector
+document.querySelector('.search button').addEventListener('click', function (){
+weather.search();
+})

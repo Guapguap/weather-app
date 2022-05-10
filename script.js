@@ -6,18 +6,17 @@ apiKey: '4541b3868e8909ef309a6e0a539cf01f',
 fetchWeather: function (city) {
     fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + this.apiKey)
     .then((response) => response.json())
-    .then((data) => console.log(data));
+    .then((data) => console.log(this.displayWeather(data)));
+    
     
 },
 
 displayWeather: function(data){
-    
-    for(i=0; i < data.list.length; i++) {
 
-    let {name} = data.list[i];
-    let {icon, description} = data.list[i].weather;
-    let {temp, humidity} = data.list[i].main;
-    let {speed} = data.list[i].wind;
+    let {name} = data.city;
+    let {icon, description} = data.list[0].weather[0];
+    let {temp, humidity} = data.list[0].main;
+    let {speed} = data.list[0].wind;
     console.log(name,icon,description,temp,humidity,speed);
     document.querySelector('.city').innerText = "Weather in " + name;
     document.querySelector('.description').innerText = description;
@@ -25,7 +24,7 @@ displayWeather: function(data){
     document.querySelector('.humid').innerText = "Humidity: " + humidity + "%";
     document.querySelector('.wind').innerText = "Wind Speed: " + speed + "mph";
     
-}
+
 
 },
 

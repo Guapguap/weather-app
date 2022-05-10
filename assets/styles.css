@@ -1,0 +1,90 @@
+body {
+    background-color: midnightblue;
+}
+
+.header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: radial-gradient(circle, rgb(199, 158, 23) 0%, rgba(237, 133, 6, 0.604) 100%);
+    border: 1px solid #eceff1;
+    border-radius: 8px;
+    box-shadow: rgba(60, 64, 67, 2) 0 1px 2px 0,
+      rgba(60, 64, 67, 0.15) 0 2px 4px 3px;
+    margin: auto;
+    padding: 20px;
+    color: white;
+}
+
+.header h1 {
+    display: flex;
+    justify-content: center;
+    font-size: 48px;
+}
+
+h2 {
+    color: white;
+}
+
+.startBtn {
+    font-size: 20px;
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.large-font {
+    font-size: 2.5em;
+    text-align:center;
+}
+
+.board {
+    width: 55vw;
+    height: 400px;
+}
+
+.card {
+    display: flex;
+    justify-content: center;
+    background: radial-gradient(circle, rgb(199, 158, 23) 0%, rgba(237, 133, 6, 0.604) 100%);
+    border: 1px solid #eceff1;
+    border-radius: 8px;
+    box-shadow: rgba(60, 64, 67, 2) 0 1px 2px 0,
+    rgba(60, 64, 67, 0.15) 0 2px 4px 3px;
+    margin-top: 10px;
+    padding: 20px;
+    color: white;
+}
+
+#timer {
+    height: 240px;
+    padding: 10px;
+    text-align: center;
+}
+
+.timer-text {
+    text-align: center;
+    padding: 55px;
+    margin-top: 5px;
+}
+
+#submit,
+#initials {
+    margin: 10px;
+    
+}
+
+.startBtn,
+.clearBtn {
+    color: white;
+    background-color: orange;
+    justify-content: space-between;
+    flex-direction: row;
+   height: 5rem;
+   width: 5rem;
+   margin: 10px;
+   font-size: 20px;
+}

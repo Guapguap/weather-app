@@ -20,6 +20,7 @@ fetchWeather: function (city) {
             let {icon, description} = data.list[i].weather[0];
             let {temp, humidity} = data.list[i].main;
             let {speed} = data.list[i].wind;
+            
             console.log(name,icon,description,temp,humidity,speed);
 
             // creates a div / card to hold all the p elements 
@@ -59,12 +60,15 @@ uvIndex: function (){
     navigator.geolocation.getCurrentPosition((success)=>{
         console.log(success);
         let {latitude, longitude} = success.coords;
+    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=imperial&appid=4541b3868e8909ef309a6e0a539cf01f`)
+    .then((res) => res.json())
+    .then((data) =>{
+        let {uvi} = data.current;
+        console.log(uvi);
     })
-    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=4541b3868e8909ef309a6e0a539cf01f")
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-    })
+})
+    
+    
 },
 
 // this function uses the value from the userinput to be used in the fetchweather function 

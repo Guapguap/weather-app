@@ -1,9 +1,28 @@
-let cardContainer = document.getElementById('cardContainer')
+let currentContainer = document.getElementById('currentContainer');
+let cardContainer = document.getElementById('cardContainer');
+let uvIndex = document.getElementById('index');
 
 let weather = {
 
 // this is the api key for the weather api 
 apiKey: '4541b3868e8909ef309a6e0a539cf01f',
+
+mainWeather: function (city) {
+    fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + this.apiKey)
+    .then((response) => response.json())
+    .then((data) => {
+    let {name} = data;
+    let {icon, description} = data.weather[0];
+    let {temp, humidity} = data.main;
+    let {speed} = data.wind;
+    console.log(name,icon,description,temp,humidity,speed);
+    document.querySelector('.city').innerText = "Weather in " + name;
+    document.querySelector('.description').innerText = description;
+    document.querySelector('.temp').innerText = temp + "°F";
+    document.querySelector('.humid').innerText = "Humidity: " + humidity + "%";
+    document.querySelector('.wind').innerText = "Wind Speed: " + speed + "mph";
+    })
+},
 
 // this function fetches and displays the weather
 fetchWeather: function (city) {
@@ -12,15 +31,16 @@ fetchWeather: function (city) {
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
-    console.log(data.list.slice(0, 6));
+        console.log(city);
+    console.log(data.list.slice(1, 5));
     console.log(data.list.length);
     console.log(data.list.length - 34);
+    // fix the length to only be 5 and add dates
         for(let i = 0; i < data.list.length - 34; i++) {
             let {name} = data.city;
             let {icon, description} = data.list[i].weather[0];
             let {temp, humidity} = data.list[i].main;
             let {speed} = data.list[i].wind;
-            
             console.log(name,icon,description,temp,humidity,speed);
 
             // creates a div / card to hold all the p elements 
@@ -50,10 +70,10 @@ fetchWeather: function (city) {
            createDiv.appendChild(createP5);
            createDiv.appendChild(createP6);
 
+        //    currentContainer.appendChild(createP)
            cardContainer.appendChild(createDiv);
         }
     })
-
 },
 
 uvIndex: function (){
@@ -64,7 +84,14 @@ uvIndex: function (){
     .then((res) => res.json())
     .then((data) =>{
         let {uvi} = data.current;
-        console.log(uvi);
+        
+        //create a separate div card to contain the uvi with the first day
+        let pEl = document.createElement('p');
+       
+        pEl.textContent = 'UV Index: ' + uvi;
+        
+        $(uvIndex).append(pEl);
+        
     })
 })
     
@@ -73,6 +100,7 @@ uvIndex: function (){
 
 // this function uses the value from the userinput to be used in the fetchweather function 
 search: function (){
+    this.mainWeather(document.querySelector('.search-bar').value);
     this.fetchWeather(document.querySelector('.search-bar').value);
 }
     
@@ -81,4 +109,5 @@ search: function (){
 // when the search button is clicked, the search function is invoked 
 document.querySelector('.search button').addEventListener('click', function (){
 weather.search();
+weather.uvIndex();
 })

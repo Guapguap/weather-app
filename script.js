@@ -1,6 +1,10 @@
 let currentContainer = document.getElementById('currentContainer');
 let cardContainer = document.getElementById('cardContainer');
 let uvIndex = document.getElementById('index');
+let searchHistory = document.getElementById('search-history')
+
+// variable to store localStorage 
+let allScores = localStorage.getItem("allScores");
 
 let weather = {
 
@@ -110,4 +114,41 @@ search: function (){
 document.querySelector('.search button').addEventListener('click', function (){
 weather.search();
 weather.uvIndex();
+console.log($('#citySearch').val());
+let citySearch = $('#citySearch').val();
+let finalScore = {
+    initials: citySearch
+}
+
+if (!allScores) {
+    allScores = [];
+} else {
+    allScores = JSON.parse(allScores);
+}
+allScores.push(finalScore);
+let newScore = JSON.stringify(allScores);
+localStorage.setItem("allScores", newScore);
+
+let historyLog = localStorage.getItem("allScores");
+console.log(historyLog);
+
+// reassigning the variable to that it takes the values stored in the json string
+historyLog = JSON.parse(historyLog);
+console.log(historyLog);
+
+// created an conditional statement when the score is retrieved  to perform the for loop 
+if (historyLog) {
+
+    // this for loop goes through the local storage and displays it through the newly created li 
+    for (let i = 0; i < historyLog.length; i++) {
+
+        // same concept as the searchHistory in the start game function 
+        let createLi = $('<li>');
+        createLi.text(historyLog[i].initials);
+        
+        // appends it to the board to be displayed 
+        searchHistory.append(createLi);
+
+    }
+}
 })

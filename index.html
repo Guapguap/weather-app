@@ -13,23 +13,24 @@
     </header>
     <div class="search">
         <input type="text"  id = "citySearch" class = "search-bar">
-        <div id = 'search-history'></div>
         <button id = "start-button" class = "startBtn">Search City</button>
+        <ul id = 'search-history' class="'search-history'"></ul>
+        
     </div>
     
     <main>
         <section>
-          <div id = 'currentContainer' class = 'weather'>
-              <h2 class="city"></h2>
-              <div class="temp"></div>
-              <img src="" alt="" class="icon"/>
-              <div class="description"></div>
-              <div class="wind"></div>
-              <div class="humid"></div>
-              <div id = 'index' class="index"></div>
-          </div>
+            <div id = 'currentContainer' class = 'currentContainer'>
+                <h2 class="city"></h2>
+                <div class="temp"></div>
+                <img src="" alt="" class="icon"/>
+                <div class="description"></div>
+                <div class="humid"></div>
+                <div class="wind"></div>
+                <div id = 'index' class="index"></div>
+                </div>
             <div id = 'cardContainer' class="card board">
-              <!-- elements will be added in here through JS               -->
+                <!-- elements will be added in here through JS               -->
             </div>
         </section>
     </main>

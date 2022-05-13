@@ -26,8 +26,9 @@ h2 {
     color: white;
 }
 
-.startBtn {
-    font-size: 20px;
+.search-history {
+    display: block;
+    
 }
 
 main {
@@ -60,7 +61,8 @@ main {
     color: white;
 }
 
-.weather {
+.weather,
+.currentContainer {
     border:  3px solid black;
     border-radius: 10px;
     margin: 5px;

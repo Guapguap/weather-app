@@ -25,6 +25,8 @@ mainWeather: function (city) {
     document.querySelector('.temp').innerText = temp + "°F";
     document.querySelector('.humid').innerText = "Humidity: " + humidity + "%";
     document.querySelector('.wind').innerText = "Wind Speed: " + speed + "mph";
+
+    $('.index').empty();
     })
 },
 

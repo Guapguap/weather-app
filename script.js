@@ -1,7 +1,9 @@
 let currentContainer = document.getElementById('currentContainer');
 let cardContainer = document.getElementById('cardContainer');
 let uvIndex = document.getElementById('index');
-let searchBoard = document.getElementById('search-history')
+let searchBoard = document.getElementById('search-history');
+let searchBtn = document.getElementById('start-button');
+let citySearch = document.getElementById('citySearch');
 
 
 
@@ -140,33 +142,121 @@ function timeConverter(UNIX_timestamp){
     
   }
 
-  console.log(timeConverter(0));
+//   console.log(timeConverter(0));
+
+
+let searchArray = [];
+
+function renderTodos() {
+    // This clears the search history log
+    searchBoard.innerHTML = "";
+    
+    // this for loop will dynamically create li's 
+    for (var i = 0; i < searchArray.length; i++) {
+      var todo = searchArray[i];
+  
+      var li = document.createElement("li");
+      li.textContent = todo;
+      li.setAttribute("data-index", i);
+  
+      var button = document.createElement("button");
+    //   $('#citySearch').val()
+      button.textContent = "update to current city above";
+  
+      li.appendChild(button);
+      searchBoard.appendChild(li);
+    }
+  }
+
+  function init() {
+    // TODO: What is the purpose of the following line of code?
+    var storedTodos = JSON.parse(localStorage.getItem("todos"));
+    // TODO: Describe the functionality of the following `if` statement.
+    if (storedTodos !== null) {
+        searchArray = storedTodos;
+    }
+    // TODO: Describe the purpose of the following line of code.
+    renderTodos();
+  }
+
+  function storeTodos() {
+    // TODO: Describe the purpose of the following line of code.
+    localStorage.setItem("todos", JSON.stringify(searchArray));
+  }
+  // TODO: Describe the purpose of the following line of code.
+  searchBtn.addEventListener("click", function(event) {
+    //   see if i need this line of code when clicked button 
+    event.preventDefault();
+    var todoText = citySearch.value.trim();
+    // TODO: Describe the functionality of the following `if` statement.
+    if (todoText === "") {
+      return;
+    }
+   // TODO: Describe the purpose of the following lines of code.
+   searchArray.push(todoText);
+    citySearch.value = "";
+   
+    // TODO: What will happen when the following functions are called?
+    storeTodos();
+    renderTodos();
+  });
+
+  searchBoard.addEventListener("click", function(event) {
+    var element = event.target;
+    // TODO: Describe the functionality of the following `if` statement.
+    if (element.matches("button") === true) {
+      var index = element.parentElement.getAttribute("data-index");
+      searchArray.splice(index, 1);
+      // TODO: What will happen when the following functions are called?
+      storeTodos();
+      renderTodos();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // when the search button is clicked, the search and uvIndex function are invoked 
 // The userInput is stored locally and displayed on the screen below the search bar
-document.querySelector('.search button').addEventListener('click', function (){
-weather.search();
-weather.uvIndex();
+// document.querySelector('.search button').addEventListener('click', function (){
+// weather.search();
+// weather.uvIndex();
 
-// var cityHistory = JSON.parse(localStorage.getItem('historyKey')) || [];
-// variable to collect the localStorage 
-let searchArray = JSON.parse(localStorage.getItem("allSearches")) || [];
+// // var cityHistory = JSON.parse(localStorage.getItem('historyKey')) || [];
+// // variable to collect the localStorage 
+// let searchArray = JSON.parse(localStorage.getItem("allSearches")) || [];
 
-let citySearch = $('#citySearch').val();
-console.log(citySearch);
+// let citySearch = $('#citySearch').val();
+// console.log(citySearch);
 
-searchArray.push(citySearch);
-console.log(searchArray);
+// searchArray.push(citySearch);
+// console.log(searchArray);
 
-let searchKey = JSON.stringify(searchArray);
-console.log(searchKey);
+// let searchKey = JSON.stringify(searchArray);
+// console.log(searchKey);
 
-localStorage.setItem('searchKey', searchArray);
+// localStorage.setItem('searchKey', searchArray);
 
-let searchHistory = localStorage.getItem("searchKey");
-console.log(searchHistory);
+// let searchHistory = localStorage.getItem("searchKey");
+// console.log(searchHistory);
 
-// for (let i = 0; i < historyLog.length; i++) {
+// for (let i = 0; i < searchHistory.length; i++) {
 
 //     if (searchHistory) {
 
@@ -174,7 +264,7 @@ console.log(searchHistory);
 //         createLi.textContent = searchHistory;
 //         console.log(createLi.text(searchHistory));
 //         // appends it to the board to be displayed 
-//         searchBoard.append(createLi);
+//         searchBoard.append(createLi.textContent);
 //     }
 // }
 

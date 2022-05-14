@@ -3,17 +3,14 @@ let cardContainer = document.getElementById('cardContainer');
 let uvIndex = document.getElementById('index');
 let searchBoard = document.getElementById('search-history');
 let searchBtn = document.getElementById('start-button');
-let citySearch = document.getElementById('citySearch');
+// let citySearch = document.getElementById('citySearch').value;
 
-
-
-let weather = {
 
 // this is the api key for the weather api 
-apiKey: '4541b3868e8909ef309a6e0a539cf01f',
+let apiKey = '4541b3868e8909ef309a6e0a539cf01f'
 
-mainWeather: function (city) {
-    fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + this.apiKey)
+function mainWeather(city) {
+    fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=4541b3868e8909ef309a6e0a539cf01f")
     .then((response) => response.json())
     .then((data) => {
     let {name} = data;
@@ -30,14 +27,14 @@ mainWeather: function (city) {
 
     $('.index').empty();
     })
-},
+};
 
 // this function fetches and displays the weather
-fetchWeather: function (city) {
+function fetchWeather(city) {
 
     $('.weather').remove();
 
-    fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + this.apiKey)
+    fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=4541b3868e8909ef309a6e0a539cf01f")
     .then((response) => response.json())
     .then((data) => {
     //     console.log(data);
@@ -85,11 +82,9 @@ fetchWeather: function (city) {
            cardContainer.appendChild(createDiv);
         }
     })
-},
+};
 
-uvIndex: function (){
-
-    
+function getUv() {
 
     navigator.geolocation.getCurrentPosition((success)=>{
         console.log(success);
@@ -109,23 +104,21 @@ uvIndex: function (){
         $(uvIndex).append(pEl);
         
     })
-
-    // pEl.textContent.remove();
 })
     
     
-},
-
-
-// this function uses the value from the userinput to be used in the fetchweather function 
-search: function (){
-    this.mainWeather(document.querySelector('.search-bar').value);
-    this.fetchWeather(document.querySelector('.search-bar').value);
-    
-    
-}
-
 };
+
+// do i need this search function 
+// this function uses the value from the userinput to be used in the fetchweather function 
+// function search(){
+//     this.mainWeather(document.querySelector('.search-bar').value);
+//     this.fetchWeather(document.querySelector('.search-bar').value);
+    
+    
+// };
+
+
 
 function timeConverter(UNIX_timestamp){
     var a = new Date(UNIX_timestamp * 1000);
@@ -183,24 +176,36 @@ function renderTodos() {
     // TODO: Describe the purpose of the following line of code.
     localStorage.setItem("todos", JSON.stringify(searchArray));
   }
-  // TODO: Describe the purpose of the following line of code.
+
+
+  // this button will use the userinput as a value to call the other functions 
   searchBtn.addEventListener("click", function(event) {
+
     //   see if i need this line of code when clicked button 
-    event.preventDefault();
-    var todoText = citySearch.value.trim();
-    // TODO: Describe the functionality of the following `if` statement.
-    if (todoText === "") {
+    // event.preventDefault();
+
+    var userInput = document.getElementById('citySearch').value;
+console.log(userInput);
+    // if they enter a blank text field, it will do nothing
+    if (userInput === "") {
       return;
     }
-   // TODO: Describe the purpose of the following lines of code.
-   searchArray.push(todoText);
+   // Pushes the text into the array
+   searchArray.push(userInput);
+
+//    clears the input text field 
     citySearch.value = "";
+   
    
     // TODO: What will happen when the following functions are called?
     storeTodos();
     renderTodos();
 
-     
+    // search();
+    getUv();
+    // the parameter is the key to this error issue 
+    fetchWeather(userInput);
+    mainWeather(userInput);
   });
 
   searchBoard.addEventListener("click", function(event) {
@@ -215,131 +220,3 @@ function renderTodos() {
 
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// when the search button is clicked, the search and uvIndex function are invoked 
-// The userInput is stored locally and displayed on the screen below the search bar
-searchBtn.addEventListener('click', function (){
-weather.search();
-weather.uvIndex();
-});
-// // var cityHistory = JSON.parse(localStorage.getItem('historyKey')) || [];
-// // variable to collect the localStorage 
-// let searchArray = JSON.parse(localStorage.getItem("allSearches")) || [];
-
-// let citySearch = $('#citySearch').val();
-// console.log(citySearch);
-
-// searchArray.push(citySearch);
-// console.log(searchArray);
-
-// let searchKey = JSON.stringify(searchArray);
-// console.log(searchKey);
-
-// localStorage.setItem('searchKey', searchArray);
-
-// let searchHistory = localStorage.getItem("searchKey");
-// console.log(searchHistory);
-
-// for (let i = 0; i < searchHistory.length; i++) {
-
-//     if (searchHistory) {
-
-//     let createLi = $('<li>');
-//         createLi.textContent = searchHistory;
-//         console.log(createLi.text(searchHistory));
-//         // appends it to the board to be displayed 
-//         searchBoard.append(createLi.textContent);
-//     }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// let finalSearch = {
-//     city: citySearch
-// }
-
-// if (!allSearches) {
-//     allSearches = []; 
-// } else {
-//     allSearches = JSON.parse(allSearches);
-// }
-// allSearches.push(finalSearch);
-// // let newScore = JSON.stringify(allSearches);
-// localStorage.setItem(newScore, JSON.stringify(allSearches));
-// console.log(localStorage.setItem(newScore, JSON.stringify(allSearches)));
-// let historyLog = localStorage.getItem("allSearches");
-// console.log(historyLog);
-
-// // reassigning the variable to that it takes the values stored in the json string
-// historyLog = JSON.parse(historyLog);
-// console.log(historyLog);
-
-// // created an conditional statement when the score is retrieved  to perform the for loop 
-// if (historyLog) {
-
-//     // same concept as the searchHistory in the start game function 
-//     // let createLi = $('<li>');
-//     // historyLog.forEach(function(historyLog){
-//     //     createLi.textContent = historyLog
-//     //     $('.searchHistory').append(createLi.textContent);
-//     //     });
-    
-//     // this for loop goes through the local storage and displays it through the newly created li 
-//     // list items are not being created. only text being appended 
-//     for (let i = 0; i < historyLog.length; i++) {
-
-//         let createLi = $('<li>');
-//         createLi.textContent = historyLog[i].city;
-//         console.log(createLi.text(historyLog[i].city));
-//         // appends it to the board to be displayed 
-//         searchHistory.append(createLi.textContent);
-//         // console.log(searchHistory);
-//     }
-//     } else if (historyLog.length > 5) {
-//         historyLog[i].city.pop()
-//     }

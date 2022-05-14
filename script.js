@@ -1,10 +1,9 @@
 let currentContainer = document.getElementById('currentContainer');
 let cardContainer = document.getElementById('cardContainer');
 let uvIndex = document.getElementById('index');
-let searchHistory = document.getElementById('search-history')
+let searchBoard = document.getElementById('search-history')
 
-// variable to collect the localStorage 
-let allSearches = localStorage.getItem("allSearches");
+
 
 let weather = {
 
@@ -21,6 +20,7 @@ mainWeather: function (city) {
     let {speed} = data.wind;
     
     document.querySelector('.city').innerText = "Weather in " + name;
+    document.querySelector('.icon').innerText = icon;
     document.querySelector('.description').innerText = description;
     document.querySelector('.temp').innerText = temp + "°F";
     document.querySelector('.humid').innerText = "Humidity: " + humidity + "%";
@@ -114,6 +114,7 @@ uvIndex: function (){
     
 },
 
+
 // this function uses the value from the userinput to be used in the fetchweather function 
 search: function (){
     this.mainWeather(document.querySelector('.search-bar').value);
@@ -121,8 +122,25 @@ search: function (){
     
     
 }
-    
+
 };
+
+function timeConverter(UNIX_timestamp){
+    var a = new Date(UNIX_timestamp * 1000);
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+    return time;
+
+    
+  }
+
+  console.log(timeConverter(0));
 
 // when the search button is clicked, the search and uvIndex function are invoked 
 // The userInput is stored locally and displayed on the screen below the search bar
@@ -130,49 +148,107 @@ document.querySelector('.search button').addEventListener('click', function (){
 weather.search();
 weather.uvIndex();
 
-
+// var cityHistory = JSON.parse(localStorage.getItem('historyKey')) || [];
+// variable to collect the localStorage 
+let searchArray = JSON.parse(localStorage.getItem("allSearches")) || [];
 
 let citySearch = $('#citySearch').val();
 console.log(citySearch);
-let finalSearch = {
-    city: citySearch
-}
 
-if (!allSearches) {
-    allSearches = []; 
-} else {
-    allSearches = JSON.parse(allSearches);
-}
-allSearches.push(finalSearch);
-let newScore = JSON.stringify(allSearches);
-localStorage.setItem("allSearches", newScore);
+searchArray.push(citySearch);
+console.log(searchArray);
 
-let historyLog = localStorage.getItem("allSearches");
+let searchKey = JSON.stringify(searchArray);
+console.log(searchKey);
+
+localStorage.setItem('searchKey', searchArray);
+
+let searchHistory = localStorage.getItem("searchKey");
+console.log(searchHistory);
+
+// for (let i = 0; i < historyLog.length; i++) {
+
+//     if (searchHistory) {
+
+//     let createLi = $('<li>');
+//         createLi.textContent = searchHistory;
+//         console.log(createLi.text(searchHistory));
+//         // appends it to the board to be displayed 
+//         searchBoard.append(createLi);
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// let finalSearch = {
+//     city: citySearch
+// }
+
+// if (!allSearches) {
+//     allSearches = []; 
+// } else {
+//     allSearches = JSON.parse(allSearches);
+// }
+// allSearches.push(finalSearch);
+// // let newScore = JSON.stringify(allSearches);
+// localStorage.setItem(newScore, JSON.stringify(allSearches));
+// console.log(localStorage.setItem(newScore, JSON.stringify(allSearches)));
+// let historyLog = localStorage.getItem("allSearches");
 // console.log(historyLog);
 
-// reassigning the variable to that it takes the values stored in the json string
-historyLog = JSON.parse(historyLog);
+// // reassigning the variable to that it takes the values stored in the json string
+// historyLog = JSON.parse(historyLog);
 // console.log(historyLog);
 
-// created an conditional statement when the score is retrieved  to perform the for loop 
-if (historyLog) {
+// // created an conditional statement when the score is retrieved  to perform the for loop 
+// if (historyLog) {
 
-    // same concept as the searchHistory in the start game function 
-    // let createLi = $('<li>');
-    // historyLog.forEach(function(historyLog){
-    //     createLi.textContent = historyLog
-    //     $('.searchHistory').append(createLi.textContent);
-    //     });
+//     // same concept as the searchHistory in the start game function 
+//     // let createLi = $('<li>');
+//     // historyLog.forEach(function(historyLog){
+//     //     createLi.textContent = historyLog
+//     //     $('.searchHistory').append(createLi.textContent);
+//     //     });
     
-    // this for loop goes through the local storage and displays it through the newly created li 
-    for (let i = 0; i < historyLog.length; i++) {
+//     // this for loop goes through the local storage and displays it through the newly created li 
+//     // list items are not being created. only text being appended 
+//     for (let i = 0; i < historyLog.length; i++) {
 
-        let createLi = $('<li>');
-        createLi.textContent = historyLog[i].city;
-        // console.log(createLi.textContent);
-        // appends it to the board to be displayed 
-        searchHistory.append(createLi.textContent);
-        // console.log(searchHistory);
-    }
-}
+//         let createLi = $('<li>');
+//         createLi.textContent = historyLog[i].city;
+//         console.log(createLi.text(historyLog[i].city));
+//         // appends it to the board to be displayed 
+//         searchHistory.append(createLi.textContent);
+//         // console.log(searchHistory);
+//     }
+//     } else if (historyLog.length > 5) {
+//         historyLog[i].city.pop()
+//     };
 })
+

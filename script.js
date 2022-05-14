@@ -155,16 +155,16 @@ function renderTodos() {
     for (var i = 0; i < searchArray.length; i++) {
       var todo = searchArray[i];
   
-      var li = document.createElement("li");
-      li.textContent = todo;
-      li.setAttribute("data-index", i);
-  
       var button = document.createElement("button");
-    //   $('#citySearch').val()
-      button.textContent = "update to current city above";
+      button.textContent = todo;
+      button.setAttribute("data-index", i);
   
-      li.appendChild(button);
-      searchBoard.appendChild(li);
+    //   var button = document.createElement("button");
+    // //   $('#citySearch').val()
+    //   button.textContent = "update to current city above";
+  
+    //   li.appendChild(button);
+      searchBoard.appendChild(button);
     }
   }
 
@@ -199,6 +199,8 @@ function renderTodos() {
     // TODO: What will happen when the following functions are called?
     storeTodos();
     renderTodos();
+
+     
   });
 
   searchBoard.addEventListener("click", function(event) {
@@ -210,8 +212,9 @@ function renderTodos() {
       // TODO: What will happen when the following functions are called?
       storeTodos();
       renderTodos();
-    }
 
+    }
+});
 
 
 
@@ -234,10 +237,10 @@ function renderTodos() {
 
 // when the search button is clicked, the search and uvIndex function are invoked 
 // The userInput is stored locally and displayed on the screen below the search bar
-// document.querySelector('.search button').addEventListener('click', function (){
-// weather.search();
-// weather.uvIndex();
-
+searchBtn.addEventListener('click', function (){
+weather.search();
+weather.uvIndex();
+});
 // // var cityHistory = JSON.parse(localStorage.getItem('historyKey')) || [];
 // // variable to collect the localStorage 
 // let searchArray = JSON.parse(localStorage.getItem("allSearches")) || [];
@@ -339,6 +342,4 @@ function renderTodos() {
 //     }
 //     } else if (historyLog.length > 5) {
 //         historyLog[i].city.pop()
-//     };
-})
-
+//     }

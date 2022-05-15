@@ -27,6 +27,7 @@ function mainWeather(city) {
     document.querySelector('.wind').innerText = "Wind Speed: " + speed + "mph";
 
     $('.index').empty();
+    // $('.green .yellow .red').empty();
     })
 };
 
@@ -102,7 +103,21 @@ function getUv() {
         console.log(uvi);
         $(uvIndex).append(pEl);
         
-        
+
+        // if statement to change the index color 
+        if(uvi < 3) {
+
+          $(uvIndex).css("color", "green")
+          
+        } else if (uvi > 3 || uvi < 8 ){
+
+          $(uvIndex).css("color", "yellow");
+          
+        } else if (uvi > 8) {
+
+          $(uvIndex).css("color", "red")
+
+        };
 
     })
 })
@@ -227,6 +242,7 @@ console.log(userInput);
 
       fetchWeather(oldCity);
       mainWeather(oldCity);
+      getUv()
 
     }
 });

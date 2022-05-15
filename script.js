@@ -5,12 +5,13 @@ let searchBoard = document.getElementById('search-history');
 let searchBtn = document.getElementById('start-button');
 
 
-// console.log(cityBtn);
-
 // this is the api key for the weather api 
 let apiKey = '4541b3868e8909ef309a6e0a539cf01f'
 
 function mainWeather(city) {
+
+  
+
     fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey)
     .then((response) => response.json())
     .then((data) => {
@@ -19,7 +20,10 @@ function mainWeather(city) {
     let {temp, humidity} = data.main;
     let {speed} = data.wind;
 
-    document.querySelector('.city').innerText = "Weather in " + name;
+    var date = new Date(data.dt * 1000).toLocaleDateString('en-US');
+    var dailyTitle = (`${city} ${date}`)
+
+    document.querySelector('.city').innerText = "Weather in " + dailyTitle;
     document.querySelector('.icon').src = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
     document.querySelector('.description').innerText = description;
     document.querySelector('.temp').innerText = temp + "°F";
@@ -39,7 +43,8 @@ function fetchWeather(city) {
     fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey)
     .then((response) => response.json())
     .then((data) => {
-    
+      console.log(data);
+      
     // console.log(data.list.slice(1, 5));
     
     // fix the length to only be 5 and add dates
@@ -50,6 +55,8 @@ function fetchWeather(city) {
             let {speed} = data.list[i].wind;
             // console.log(name,icon,description,temp,humidity,speed);
 
+            var date = new Date(data.list[i].dt * 1000).toLocaleDateString('en-US');
+            var dailyTitle = (`${city} ${date}`)
             // creates a div / card to hold all the p elements 
            let createDiv = document.createElement('div');
            createDiv.setAttribute('id', 'weather-card')
@@ -57,22 +64,23 @@ function fetchWeather(city) {
 
         //    creating multiple p elements to display all the values separately 
            let createP = document.createElement('p');
-           let createP2 = document.createElement('p');
+           let createImg = document.createElement('img');
+           createImg.setAttribute('src', "")
            let createP3 = document.createElement('p');
            let createP4 = document.createElement('p');
            let createP5 = document.createElement('p');
            let createP6 = document.createElement('p');
 
         //    assigning all the variables values to display as text content 
-           createP.textContent = name;
-           createP2.textContent = icon;
+           createP.textContent = dailyTitle;
+           createImg.src = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
            createP3.textContent = description;
            createP4.textContent = 'Temperature: ' + temp;
            createP5.textContent = 'Humidity: ' + humidity;
            createP6.textContent = 'Wind Speed: ' + speed;
 
            createDiv.appendChild(createP);
-           createDiv.appendChild(createP2);
+           createDiv.appendChild(createImg);
            createDiv.appendChild(createP3);
            createDiv.appendChild(createP4);
            createDiv.appendChild(createP5);
@@ -125,31 +133,21 @@ function getUv() {
     
 };
 
-// do i need this search function 
-// this function uses the value from the userinput to be used in the fetchweather function 
-// function search(){
-//     this.mainWeather(document.querySelector('.search-bar').value);
-//     this.fetchWeather(document.querySelector('.search-bar').value);
-    
-    
-// };
 
-
-
-function timeConverter(UNIX_timestamp){
-    var a = new Date(UNIX_timestamp * 1000);
-    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    var year = a.getFullYear();
-    var month = months[a.getMonth()];
-    var date = a.getDate();
-    var hour = a.getHours();
-    var min = a.getMinutes();
-    var sec = a.getSeconds();
-    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-    return time;
+// function timeConverter(UNIX_timestamp){
+//     var a = new Date(UNIX_timestamp * 1000);
+//     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+//     var year = a.getFullYear();
+//     var month = months[a.getMonth()];
+//     var date = a.getDate();
+//     var hour = a.getHours();
+//     var min = a.getMinutes();
+//     var sec = a.getSeconds();
+//     var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+//     return time;
 
     
-  }
+//   }
 
 //   console.log(timeConverter(0));
 

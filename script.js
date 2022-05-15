@@ -3,14 +3,15 @@ let cardContainer = document.getElementById('cardContainer');
 let uvIndex = document.getElementById('index');
 let searchBoard = document.getElementById('search-history');
 let searchBtn = document.getElementById('start-button');
-// let citySearch = document.getElementById('citySearch').value;
 
+
+// console.log(cityBtn);
 
 // this is the api key for the weather api 
 let apiKey = '4541b3868e8909ef309a6e0a539cf01f'
 
 function mainWeather(city) {
-    fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=4541b3868e8909ef309a6e0a539cf01f")
+    fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey)
     .then((response) => response.json())
     .then((data) => {
     let {name} = data;
@@ -34,14 +35,12 @@ function fetchWeather(city) {
 
     $('.weather').remove();
 
-    fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=4541b3868e8909ef309a6e0a539cf01f")
+    fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey)
     .then((response) => response.json())
     .then((data) => {
-    //     console.log(data);
-    //     console.log(city);
+    
     // console.log(data.list.slice(1, 5));
-    // console.log(data.list.length);
-    // console.log(data.list.length - 34);
+    
     // fix the length to only be 5 and add dates
         for(let i = 0; i < data.list.length - 35; i++) {
             let {name} = data.city;
@@ -103,6 +102,8 @@ function getUv() {
         console.log(uvi);
         $(uvIndex).append(pEl);
         
+        
+
     })
 })
     
@@ -148,17 +149,19 @@ function renderTodos() {
     for (var i = 0; i < searchArray.length; i++) {
       var todo = searchArray[i];
   
+      var li = document.createElement("li");
+      // li.textContent = todo;
+      li.setAttribute("data-index", i);
+      li.setAttribute("id", 'cityLi');
+
       var button = document.createElement("button");
       button.textContent = todo;
-      button.setAttribute("data-index", i);
+      button.setAttribute("id", 'cityBtn');
   
-    //   var button = document.createElement("button");
-    // //   $('#citySearch').val()
-    //   button.textContent = "update to current city above";
-  
-    //   li.appendChild(button);
-      searchBoard.appendChild(button);
+      li.appendChild(button);
+      searchBoard.appendChild(li);
     }
+      
   }
 
   function init() {
@@ -179,10 +182,10 @@ function renderTodos() {
 
 
   // this button will use the userinput as a value to call the other functions 
-  searchBtn.addEventListener("click", function(event) {
+  searchBtn.addEventListener("click", function() {
 
     //   see if i need this line of code when clicked button 
-    // event.preventDefault();
+   
 
     var userInput = document.getElementById('citySearch').value;
 console.log(userInput);
@@ -210,13 +213,20 @@ console.log(userInput);
 
   searchBoard.addEventListener("click", function(event) {
     var element = event.target;
-    // TODO: Describe the functionality of the following `if` statement.
+    let oldCity = document.getElementById('cityBtn').textContent;
+    console.log(oldCity);
+
+    // when the condition is met, it removes the search history appended
     if (element.matches("button") === true) {
       var index = element.parentElement.getAttribute("data-index");
       searchArray.splice(index, 1);
-      // TODO: What will happen when the following functions are called?
+
+      // invokes the following functions when this condition is met 
       storeTodos();
       renderTodos();
+
+      fetchWeather(oldCity);
+      mainWeather(oldCity);
 
     }
 });

@@ -33,7 +33,7 @@ Below is the link to my website and a screenshot of my website to preview it bef
 
 <br>
 
-Link to Password Generator: <a href="https://guapguap.github.io/password-generator/" target="_blank">https://guapguap.github.io/password-generator/</a>
+Link to Weather App: <a href="https://guapguap.github.io/weather-app/" target="_blank">https://guapguap.github.io/weather-app/</a>
 
 <br>
 <br>

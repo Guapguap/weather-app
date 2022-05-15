@@ -12,14 +12,14 @@ Here is a short description about my thoughts looking into this project.
 <br>
 <strong>Why did you build this project?</strong>
 <br>
-    -This project was my first attempt at utilizing my knowledge of JavaScript and see how it worked cohesively with the WEB API methods. A great introduction to the subject.
+    -This project was my biggest attempt at utilizing my knowledge of JavaScript, Web API's, and localStorage and seeing how it worked cohesively. An extremely challenging assignment covering all the subjects.
 <strong>What problems did I encounter?</strong>
 <br>
-    -There were two problems at the end that I encountered. The first being the program still ran even though the user did not put a valid input. The second was that the previous password text was still displayed on the screen and would not refresh when starting a new generated password and would combine the two. With the help of my tutor, I was able to figure out that my variable to store the password was global and not local. So every time the function was ran, the memory was still stored and not reset. The while loop was the solution to the program still running after an invalid input. The prompt kept displaying even after an invalid input with an alert to notify the user to choose a valid number. 
+    -All of the acceptance criteria I encountered a problem to a certain degree. Main problems included displaying the data and the local storage. My first problem was mostly resolved through my tutor. I found out the solution to my local storage problem through an activity in week 4 sprint. 
 <br>
 <strong>What did you learn?</strong>
 <br>
-    -I learned a lot more about if else statements, how loops are very important to get an answer you want without having to write an unnecessary amount of code, and the importance of global and local scopes.
+    -I learned a lot more about Web API's and local storage. Being able to draw information from these API's was a big stepping stone with my general understanding of this subject.
 
 ## Website Link and Screenshot Usage
 
@@ -27,7 +27,7 @@ Below is the link to my website and a screenshot of my website to preview it bef
 
 <ol>
     <li>If you would like to open up the website, click on the hyperlink provided below.</li>
-    <li>Once you are brought to the website page, you can click the button and proceed by selecting the following commands displayed.</li>
+    <li>Once you are brought to the website page, you can type a city into the input field and click the button to see the information displayed.</li>
     <li>If you do not want to open the website, you can preview how it has been designed in the screenshot below.</li>
 </ol>
 

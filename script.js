@@ -21,7 +21,9 @@ function mainWeather(city) {
     let {icon, description} = data.weather[0];
     let {temp, humidity} = data.main;
     let {speed} = data.wind;
+    let {lat, lon} = data.coord;
 
+    
     var date = new Date(data.dt * 1000).toLocaleDateString('en-US');
     var dailyTitle = (`${city} ${date}`)
 
@@ -33,6 +35,8 @@ function mainWeather(city) {
     document.querySelector('.wind').innerText = "Wind Speed: " + speed + "mph";
 
     $('.index').empty();
+
+    getUv(lat, lon)
 
     })
 };
@@ -55,8 +59,7 @@ function fetchWeather(city) {
             let {icon, description} = data.list[i].weather[0];
             let {temp, humidity} = data.list[i].main;
             let {speed} = data.list[i].wind;
-            // console.log(name,icon,description,temp,humidity,speed);
-console.log(data.list[i].dt);
+            
             var date = new Date(data.list[i].dt * 1000).toLocaleDateString('en-US');
             var dailyTitle = (`${city} ${date}`)
             // creates a div / card to hold all the p elements 
@@ -94,17 +97,13 @@ console.log(data.list[i].dt);
     })
 };
 
-function getUv() {
+function getUv(latitude, longitude) {
 
-    navigator.geolocation.getCurrentPosition((success)=>{
-        console.log(success);
-        let {latitude, longitude} = success.coords;
-    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=imperial&appid=4541b3868e8909ef309a6e0a539cf01f`)
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + apiKey)
     .then((res) => res.json())
     .then((data) =>{
-        let {uvi} = data.current;
-        console.log(data);
-        console.log(data.current);
+      console.log(data);
+        let uvi = data.current.uvi;
         
         //create a separate div card to contain the uvi with the first day
         let pEl = document.createElement('p');
@@ -130,10 +129,10 @@ function getUv() {
         };
 
     })
-})
+}
     
     
-};
+
 
 
 // function timeConverter(UNIX_timestamp){

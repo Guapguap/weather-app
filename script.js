@@ -48,13 +48,13 @@ function fetchWeather(city) {
     // console.log(data.list.slice(1, 5));
     
     // fix the length to only be 5 and add dates
-        for(let i = 0; i < data.list.length - 35; i++) {
+        for(let i = 7; i < 42; i+=7) {
             let {name} = data.city;
             let {icon, description} = data.list[i].weather[0];
             let {temp, humidity} = data.list[i].main;
             let {speed} = data.list[i].wind;
             // console.log(name,icon,description,temp,humidity,speed);
-
+console.log(data.list[i].dt);
             var date = new Date(data.list[i].dt * 1000).toLocaleDateString('en-US');
             var dailyTitle = (`${city} ${date}`)
             // creates a div / card to hold all the p elements 

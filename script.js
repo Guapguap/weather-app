@@ -18,16 +18,16 @@ function mainWeather(city) {
     let {icon, description} = data.weather[0];
     let {temp, humidity} = data.main;
     let {speed} = data.wind;
-    
+
     document.querySelector('.city').innerText = "Weather in " + name;
-    document.querySelector('.icon').innerText = icon;
+    document.querySelector('.icon').src = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
     document.querySelector('.description').innerText = description;
     document.querySelector('.temp').innerText = temp + "°F";
     document.querySelector('.humid').innerText = "Humidity: " + humidity + "%";
     document.querySelector('.wind').innerText = "Wind Speed: " + speed + "mph";
 
     $('.index').empty();
-    // $('.green .yellow .red').empty();
+
     })
 };
 
@@ -108,7 +108,7 @@ function getUv() {
         if(uvi < 3) {
 
           $(uvIndex).css("color", "green")
-          
+
         } else if (uvi > 3 || uvi < 8 ){
 
           $(uvIndex).css("color", "yellow");

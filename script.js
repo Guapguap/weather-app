@@ -4,6 +4,8 @@ let uvIndex = document.getElementById('index');
 let searchBoard = document.getElementById('search-history');
 let searchBtn = document.getElementById('start-button');
 
+$('currentContainer').hide();
+$('cardContainer').hide()
 
 // this is the api key for the weather api 
 let apiKey = '4541b3868e8909ef309a6e0a539cf01f'
@@ -188,8 +190,9 @@ function renderTodos() {
     renderTodos();
   }
 
+  // sets the array into a string in localstorage 
   function storeTodos() {
-    // TODO: Describe the purpose of the following line of code.
+    
     localStorage.setItem("todos", JSON.stringify(searchArray));
   }
 
@@ -197,11 +200,8 @@ function renderTodos() {
   // this button will use the userinput as a value to call the other functions 
   searchBtn.addEventListener("click", function() {
 
-    //   see if i need this line of code when clicked button 
-   
-
     var userInput = document.getElementById('citySearch').value;
-console.log(userInput);
+
     // if they enter a blank text field, it will do nothing
     if (userInput === "") {
       return;
@@ -213,24 +213,23 @@ console.log(userInput);
     citySearch.value = "";
    
    
-    // TODO: What will happen when the following functions are called?
+    // invoking all these functions 
     storeTodos();
     renderTodos();
-
-    // search();
     getUv();
-    // the parameter is the key to this error issue 
     fetchWeather(userInput);
     mainWeather(userInput);
   });
 
   searchBoard.addEventListener("click", function(event) {
+    event.preventDefault();
     var element = event.target;
     let oldCity = document.getElementById('cityBtn').textContent;
     console.log(oldCity);
 
     // when the condition is met, it removes the search history appended
     if (element.matches("button") === true) {
+      event.preventDefault();
       var index = element.parentElement.getAttribute("data-index");
       searchArray.splice(index, 1);
 
@@ -238,8 +237,8 @@ console.log(userInput);
       storeTodos();
       renderTodos();
 
-      fetchWeather(oldCity);
-      mainWeather(oldCity);
+      fetchWeather(element.textContent);
+      mainWeather(element.textContent);
       getUv()
 
     }

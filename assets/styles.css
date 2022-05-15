@@ -1,5 +1,5 @@
 body {
-    background-color: grey;
+    background-color: rgb(41, 82, 25);
 }
 
 .header {
@@ -26,8 +26,8 @@ h2 {
     color: white;
 }
 
-.search {
-    display: block;
+.search-history {
+    list-style: none
     
 }
 
@@ -64,6 +64,7 @@ main {
 .weather,
 .currentContainer {
     border:  3px solid black;
+    background-color: rgb(57, 149, 179);
     border-radius: 10px;
     margin: 5px;
     padding: 5px;
@@ -88,14 +89,12 @@ main {
     
 }
 
-.startBtn,
-.clearBtn {
+#cityBtn,
+.startBtn {
     color: white;
-    background-color: orange;
+    background: radial-gradient(circle, rgb(199, 158, 23) 0%, rgba(237, 133, 6, 0.604) 100%);
     justify-content: space-between;
     flex-direction: row;
-   height: 5rem;
-   width: 5rem;
    margin: 10px;
    font-size: 20px;
 }

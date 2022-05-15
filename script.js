@@ -1,11 +1,13 @@
+// global variables to link the following ids 
+
 let currentContainer = document.getElementById('currentContainer');
 let cardContainer = document.getElementById('cardContainer');
 let uvIndex = document.getElementById('index');
 let searchBoard = document.getElementById('search-history');
 let searchBtn = document.getElementById('start-button');
 
-$('currentContainer').hide();
-$('cardContainer').hide()
+$('.currentContainer').hide();
+$('.card').hide()
 
 // this is the api key for the weather api 
 let apiKey = '4541b3868e8909ef309a6e0a539cf01f'
@@ -17,16 +19,17 @@ function mainWeather(city) {
     fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey)
     .then((response) => response.json())
     .then((data) => {
-    let {name} = data;
+  
     let {icon, description} = data.weather[0];
     let {temp, humidity} = data.main;
     let {speed} = data.wind;
     let {lat, lon} = data.coord;
 
-    
+    // creates the date for the current weather 
     var date = new Date(data.dt * 1000).toLocaleDateString('en-US');
     var dailyTitle = (`${city} ${date}`)
 
+    // changes the text of all the current weather 
     document.querySelector('.city').innerText = "Weather in " + dailyTitle;
     document.querySelector('.icon').src = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
     document.querySelector('.description').innerText = description;
@@ -36,6 +39,7 @@ function mainWeather(city) {
 
     $('.index').empty();
 
+    // invokes the getUv function with the lat lon argument 
     getUv(lat, lon)
 
     })
@@ -84,6 +88,7 @@ function fetchWeather(city) {
            createP5.textContent = 'Humidity: ' + humidity;
            createP6.textContent = 'Wind Speed: ' + speed;
 
+          //  appends all the elements to the div card 
            createDiv.appendChild(createP);
            createDiv.appendChild(createImg);
            createDiv.appendChild(createP3);
@@ -97,6 +102,7 @@ function fetchWeather(city) {
     })
 };
 
+// this function gets the uvIndex 
 function getUv(latitude, longitude) {
 
     fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + apiKey)
@@ -107,9 +113,9 @@ function getUv(latitude, longitude) {
         
         //create a separate div card to contain the uvi with the first day
         let pEl = document.createElement('p');
-        console.log(uvi);
+        
         pEl.textContent = 'UV Index: ' + uvi;
-        console.log(uvi);
+      
         $(uvIndex).append(pEl);
         
 
@@ -131,28 +137,7 @@ function getUv(latitude, longitude) {
     })
 }
     
-    
-
-
-
-// function timeConverter(UNIX_timestamp){
-//     var a = new Date(UNIX_timestamp * 1000);
-//     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-//     var year = a.getFullYear();
-//     var month = months[a.getMonth()];
-//     var date = a.getDate();
-//     var hour = a.getHours();
-//     var min = a.getMinutes();
-//     var sec = a.getSeconds();
-//     var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-//     return time;
-
-    
-//   }
-
-//   console.log(timeConverter(0));
-
-
+// empty array to push the userInput 
 let searchArray = [];
 
 function renderTodos() {
@@ -163,29 +148,37 @@ function renderTodos() {
     for (var i = 0; i < searchArray.length; i++) {
       var todo = searchArray[i];
   
+      // creates a li 
       var li = document.createElement("li");
-      // li.textContent = todo;
+      
+      // creates attributes to append to the li 
       li.setAttribute("data-index", i);
       li.setAttribute("id", 'cityLi');
 
+      // creates buttons 
       var button = document.createElement("button");
+
+      // set the text of the button to be equal to the setItem 
       button.textContent = todo;
       button.setAttribute("id", 'cityBtn');
   
+      // appends the following elements to each other 
       li.appendChild(button);
       searchBoard.appendChild(li);
     }
       
   }
 
+
   function init() {
-    // TODO: What is the purpose of the following line of code?
+    
     var storedTodos = JSON.parse(localStorage.getItem("todos"));
-    // TODO: Describe the functionality of the following `if` statement.
+    
+    // sets the array to get the parsed stored items 
     if (storedTodos !== null) {
         searchArray = storedTodos;
     }
-    // TODO: Describe the purpose of the following line of code.
+    // invokes the following function
     renderTodos();
   }
 
@@ -199,6 +192,8 @@ function renderTodos() {
   // this button will use the userinput as a value to call the other functions 
   searchBtn.addEventListener("click", function() {
 
+    $('.currentContainer').show();
+    $('.card').show()
     var userInput = document.getElementById('citySearch').value;
 
     // if they enter a blank text field, it will do nothing
@@ -220,6 +215,7 @@ function renderTodos() {
     mainWeather(userInput);
   });
 
+  // when the items from the search history is clicked, the following function performs 
   searchBoard.addEventListener("click", function(event) {
     event.preventDefault();
     var element = event.target;
@@ -233,6 +229,7 @@ function renderTodos() {
       searchArray.splice(index, 1);
 
       // invokes the following functions when this condition is met 
+      // storeTodos and renderTodos clears the text in the userinput field
       storeTodos();
       renderTodos();
 
